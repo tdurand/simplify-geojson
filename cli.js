@@ -9,6 +9,7 @@ var usage = fs.readFileSync(path.join(__dirname, 'usage.txt'), { encoding: 'utf8
 var stdin
 
 var tolerance = argv.t || argv.tolerance || 0.001
+var toleranceZ = argv.z || argv.toleranceZ || 10
 tolerance = +tolerance // cast to Number
 
 if (argv.help || argv.h) {
@@ -32,7 +33,7 @@ stdin.pipe(concat(function (buffer) {
   } catch (e) {
     return console.error(e)
   }
-  var result = simplify(geojson, tolerance)
+  var result = simplify(geojson, tolerance, toleranceZ)
   if (result instanceof Error) return console.error(result)
   console.log(JSON.stringify(result, null, 2))
 }))
